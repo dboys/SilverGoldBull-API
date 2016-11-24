@@ -1,21 +1,15 @@
 [![Build Status](https://travis-ci.org/dboys/SilverGoldBull-API.png?branch=master)](https://travis-ci.org/dboys/SilverGoldBull-API)
 
 
-SilverGoldBull-API
+# NAME
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SilverGoldBull::API - Perl client for the SilverGoldBull(https://silvergoldbull.com/) web service
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+# VERSION
 
+version 0.01
 
-INSTALLATION
+# INSTALLATION
 
 To install this module, run the following commands:
 
@@ -24,29 +18,127 @@ To install this module, run the following commands:
 	./Build test
 	./Build install
 
-SUPPORT AND DOCUMENTATION
+# SYNOPSIS
+    use SilverGoldBull::API;
+    use SilverGoldBull::API::BillingAddress;
+    use SilverGoldBull::API::ShippingAddress;
+    use SilverGoldBull::API::Item;
+    use SilverGoldBull::API::Order;
 
-After installing, you can find documentation for this module with the
-perldoc command.
+    my $sgb = SilverGoldBull::API->new(api_key => <API_KEY>);#or use SILVERGOLDBULL_API_KEY env variable
+    
+    #get available currency list
+    my $response = $sgb->get_currency_list();
+    if ($response->is_success) {
+        my $currency_list = $response->data();
+    }
+    
+    my $billing_addr = SilverGoldBull::API::BillingAddress->new({
+      'city'       => 'Calgary',
+      'first_name' => 'John',
+      'region'     => 'AB',
+      'email'      => 'sales@silvergoldbull.com',
+      'last_name'  => 'Smith',
+      'postcode'   => 'T2P 5C5',
+      'street'     => '888 - 3 ST SW, 10 FLOOR - WEST TOWER',
+      'phone'      => '+1 (403) 668 8648',
+      'country'    => 'CA'
+    });
+    
+    my $shipping_addr = SilverGoldBull::API::ShippinggAddress->new({
+      'city'       => 'Calgary',
+      'first_name' => 'John',
+      'region'     => 'AB',
+      'email'      => 'sales@silvergoldbull.com',
+      'last_name'  => 'Smith',
+      'postcode'   => 'T2P 5C5',
+      'street'     => '888 - 3 ST SW, 10 FLOOR - WEST TOWER',
+      'phone'      => '+1 (403) 668 8648',
+      'country'    => 'CA'
+    });
+    
+    my $item = SilverGoldBull::API::Item->new({
+        'bid_price' => 468.37,
+        'qty'       => 1,
+        'id'        => '2706',
+    });
+    
+    my $order_info = {
+      "currency"        => "USD",
+      "declaration"     => "TEST",
+      "shipping_method" => "1YR_STORAGE",
+      "payment_method"  => "paypal",
+      "shipping"        => $shipping,#or raw hashref
+      "billing"         => $billing,#or raw hashref
+      "items"           => [$item],#or raw array of hashrefs
+    };
+    my $order = SilverGoldBull::API::Order->new($order_info);
+    my $response = $sgb->create_order($order);
 
-    perldoc SilverGoldBull::API
+# OVERVIEW
 
-You can also look for information at:
+This is a Perl client for the SilverGoldBull API at [SilverGoldBull API docs](https://silvergoldbull.com/api-docs).
 
-    RT, CPAN's request tracker (report bugs here)
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=SilverGoldBull-API
+# METHODS
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/SilverGoldBull-API
+All methods return SilverGoldBull::API::Response object.
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/SilverGoldBull-API
+## get\_currency\_list
 
-    Search CPAN
-        http://search.cpan.org/dist/SilverGoldBull-API/
+Input: nothing
+
+Result: An available currency list.
+
+## get\_payment\_method\_list
+
+Input: nothing
+
+Result: An available payment method list.
+
+## get\_shipping\_method\_list
+
+Input: nothing
+
+Result: An available shipping method list.
+
+## get\_product\_list
+
+Input: nothing
+
+Result: An available product list.
+
+## get\_product
+
+Input: product id;
+
+Result: Product information.
+
+## get\_order
+
+Input: order id;
+
+Result: Order information.
+
+## create\_order
+
+Input: SilverGoldBull::API::Order object;
+
+Result: Product information.
+
+## create\_quote
+
+Input: SilverGoldBull::API::Quote object;
+
+Result: Quote information.
 
 
-LICENSE AND COPYRIGHT
+
+
+# SEE ALSO
+
+- [SilverGoldBull API docs](https://silvergoldbull.com/api-docs)
+
+# LICENSE AND COPYRIGHT
 
 Copyright (C) 2016 Denis Boyun
 
@@ -55,34 +147,3 @@ under the terms of the the Artistic License (2.0). You may obtain a
 copy of the full license at:
 
 L<http://www.perlfoundation.org/artistic_license_2_0>
-
-Any use, modification, and distribution of the Standard or Modified
-Versions is governed by this Artistic License. By using, modifying or
-distributing the Package, you accept this license. Do not use, modify,
-or distribute the Package, if you do not accept this license.
-
-If your Modified Version has been derived from a Modified Version made
-by someone other than you, you are nevertheless required to ensure that
-your Modified Version complies with the requirements of this license.
-
-This license does not grant you the right to use any trademark, service
-mark, tradename, or logo of the Copyright Holder.
-
-This license includes the non-exclusive, worldwide, free-of-charge
-patent license to make, have made, use, offer to sell, sell, import and
-otherwise transfer the Package with respect to any patent claims
-licensable by the Copyright Holder that are necessarily infringed by the
-Package. If you institute patent litigation (including a cross-claim or
-counterclaim) against any party alleging that the Package constitutes
-direct or contributory patent infringement, then this Artistic License
-to you shall terminate on the date that such litigation is filed.
-
-Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER
-AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.
-THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY
-YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
-CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
-CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

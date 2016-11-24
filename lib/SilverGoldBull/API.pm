@@ -22,7 +22,7 @@ use constant {
 
 =head1 NAME
 
-SilverGoldBull::API - Perl client for the SilverGoldBull(https://api.silvergoldbull.com/) web service
+SilverGoldBull::API - Perl client for the SilverGoldBull(https://silvergoldbull.com/) web service
 
 =head1 VERSION
 
@@ -98,23 +98,16 @@ sub _request {
     $data = $content;
   }
   
-  return SilverGoldBull::API::Response->new({ success => $success, data => $data });
+  return SilverGoldBull::API::Response->new({ success => $success || 0, data => $data });
 }
-
-=head1 SYNOPSIS
-
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
-    use SilverGoldBull::API;
-
-    my $sgb = SilverGoldBull::API->new(api_key => '<API_KEY>');
-    ...
 
 =head1 SUBROUTINES/METHODS
 
 =head2 get_currency_list
+
+This method returns an available currencies.
+Input: nothing
+Result: SilverGoldBull::API::Response object
 
 =cut
 
@@ -126,6 +119,10 @@ sub get_currency_list {
 
 =head2 get_payment_method_list
 
+This method returns an available payment methods.
+Input: nothing
+Result: SilverGoldBull::API::Response object
+
 =cut
 
 sub get_payment_method_list {
@@ -134,6 +131,10 @@ sub get_payment_method_list {
 }
 
 =head2 get_shipping_method_list
+
+This method returns an available shipping methods.
+Input: nothing
+Result: SilverGoldBull::API::Response object
 
 =cut
 
@@ -144,6 +145,10 @@ sub get_shipping_method_list {
 
 =head2 get_product_list
 
+This method returns product list.
+Input: nothing
+Result: SilverGoldBull::API::Response object
+
 =cut
 
 sub get_product_list {
@@ -152,6 +157,10 @@ sub get_product_list {
 }
 
 =head2 get_product
+
+This method returns detailed information about product by id.
+Input: nothing
+Result: SilverGoldBull::API::Response object
 
 =cut
 
@@ -162,6 +171,10 @@ sub get_product {
 
 =head2 get_order_list
 
+This method returns order list.
+Input: nothing
+Result: SilverGoldBull::API::Response object
+
 =cut
 
 sub get_order_list {
@@ -170,6 +183,10 @@ sub get_order_list {
 }
 
 =head2 get_order
+
+This method returns detailed information about order by id.
+Input: nothing
+Result: SilverGoldBull::API::Response object
 
 =cut
 
@@ -184,6 +201,10 @@ sub get_order {
 
 =head2 create_order
 
+This method creates a new order.
+Input: nothing
+Result: SilverGoldBull::API::Response object
+
 =cut
 
 sub create_order {
@@ -195,11 +216,15 @@ sub create_order {
   return $self->_request({ method => 'POST', url => $self->_build_url('orders/create'), params => $order->to_hashref });
 }
 
-=head2 quote
+=head2 create_quote
+
+This method creates a quote.
+Input: nothing
+Result: SilverGoldBull::API::Response object
 
 =cut
 
-sub quote {
+sub create_quote {
   my ($self, $quote) = @_;
   if (!defined $quote && (ref($quote) ne 'SilverGoldBull::API::Quote')) {
     croak('Missing SilverGoldBull::API::Quote object');

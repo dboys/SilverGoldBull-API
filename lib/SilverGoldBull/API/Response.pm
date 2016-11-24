@@ -6,16 +6,16 @@ use warnings;
 use Mouse;
 
 has 'success' => (
-  is => 'rw',
+  is => 'ro',
   isa => 'Maybe[Bool]',
   required => 1,
-  writer => 'success',
   reader => 'is_success',
 );
 
 has 'data' => (
-  is  => 'rw',
+  is  => 'ro',
   isa => 'Maybe[Any]',
+  reader => 'data',
   required => 1,
 );
 
