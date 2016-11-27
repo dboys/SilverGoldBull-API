@@ -35,5 +35,5 @@ t/12-quote.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
-MYMETA.json
-MYMETA.yml
+META.json
+META.yml
