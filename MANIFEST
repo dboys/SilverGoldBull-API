@@ -2,6 +2,7 @@
 Build.PL
 Changes
 cpanfile
+dist.ini
 ignore.txt
 lib/SilverGoldBull/API.pm
 lib/SilverGoldBull/API/AddressRole.pm
@@ -13,6 +14,7 @@ lib/SilverGoldBull/API/OrderRole.pm
 lib/SilverGoldBull/API/Quote.pm
 lib/SilverGoldBull/API/Response.pm
 lib/SilverGoldBull/API/ShippingAddress.pm
+LICENSE
 MANIFEST			This list of files
 README
 README.md
