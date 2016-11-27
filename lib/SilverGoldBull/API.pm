@@ -26,11 +26,11 @@ SilverGoldBull::API - Perl client for the SilverGoldBull(https://silvergoldbull.
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 has 'ua' => (
   is       => 'ro',

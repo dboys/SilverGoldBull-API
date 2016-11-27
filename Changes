@@ -9,3 +9,9 @@ Revision history for SilverGoldBull-API
 0.03    2016-11-27
         Add license and dependency
 
+0.04    2016-11-27
+        Update license
+
+0.05    2016-11-27
+        Fix cpantester errors
+
