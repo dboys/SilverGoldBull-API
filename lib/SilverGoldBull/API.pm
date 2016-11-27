@@ -106,7 +106,9 @@ sub _request {
 =head2 get_currency_list
 
 This method returns an available currencies.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -120,7 +122,9 @@ sub get_currency_list {
 =head2 get_payment_method_list
 
 This method returns an available payment methods.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -133,7 +137,9 @@ sub get_payment_method_list {
 =head2 get_shipping_method_list
 
 This method returns an available shipping methods.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -146,7 +152,9 @@ sub get_shipping_method_list {
 =head2 get_product_list
 
 This method returns product list.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -159,7 +167,9 @@ sub get_product_list {
 =head2 get_product
 
 This method returns detailed information about product by id.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -172,7 +182,9 @@ sub get_product {
 =head2 get_order_list
 
 This method returns order list.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -185,7 +197,9 @@ sub get_order_list {
 =head2 get_order
 
 This method returns detailed information about order by id.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -202,7 +216,9 @@ sub get_order {
 =head2 create_order
 
 This method creates a new order.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
@@ -219,7 +235,9 @@ sub create_order {
 =head2 create_quote
 
 This method creates a quote.
+
 Input: nothing
+
 Result: SilverGoldBull::API::Response object
 
 =cut
