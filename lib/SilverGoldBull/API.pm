@@ -26,11 +26,11 @@ SilverGoldBull::API - Perl client for the SilverGoldBull(https://silvergoldbull.
 
 =head1 VERSION
 
-Version 0.06
+Version 0.08
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.08';
 
 has 'ua' => (
   is       => 'ro',
@@ -101,6 +101,64 @@ sub _request {
   return SilverGoldBull::API::Response->new({ success => $success || 0, data => $data });
 }
 
+=head1 SYNOPSIS
+
+    use SilverGoldBull::API;
+    use SilverGoldBull::API::BillingAddress;
+    use SilverGoldBull::API::ShippingAddress;
+    use SilverGoldBull::API::Item;
+    use SilverGoldBull::API::Order;
+
+    my $sgb = SilverGoldBull::API->new(api_key => <API_KEY>);#or use SILVERGOLDBULL_API_KEY env variable
+    
+    #get available currency list
+    my $response = $sgb->get_currency_list();
+    if ($response->is_success) {
+        my $currency_list = $response->data();
+    }
+    
+    my $billing_addr = SilverGoldBull::API::BillingAddress->new({
+      'city'       => 'Calgary',
+      'first_name' => 'John',
+      'region'     => 'AB',
+      'email'      => 'sales@silvergoldbull.com',
+      'last_name'  => 'Smith',
+      'postcode'   => 'T2P 5C5',
+      'street'     => '888 - 3 ST SW, 10 FLOOR - WEST TOWER',
+      'phone'      => '+1 (403) 668 8648',
+      'country'    => 'CA'
+    });
+    
+    my $shipping_addr = SilverGoldBull::API::ShippinggAddress->new({
+      'city'       => 'Calgary',
+      'first_name' => 'John',
+      'region'     => 'AB',
+      'email'      => 'sales@silvergoldbull.com',
+      'last_name'  => 'Smith',
+      'postcode'   => 'T2P 5C5',
+      'street'     => '888 - 3 ST SW, 10 FLOOR - WEST TOWER',
+      'phone'      => '+1 (403) 668 8648',
+      'country'    => 'CA'
+    });
+    
+    my $item = SilverGoldBull::API::Item->new({
+        'bid_price' => 468.37,
+        'qty'       => 1,
+        'id'        => '2706',
+    });
+    
+    my $order_info = {
+      "currency"        => "USD",
+      "declaration"     => "TEST",
+      "shipping_method" => "1YR_STORAGE",
+      "payment_method"  => "paypal",
+      "shipping"        => $shipping,#or raw hashref
+      "billing"         => $billing,#or raw hashref
+      "items"           => [$item],#or raw array of hashrefs
+    };
+    my $order = SilverGoldBull::API::Order->new($order_info);
+    my $response = $sgb->create_order($order);
+
 =head1 SUBROUTINES/METHODS
 
 =head2 get_currency_list
@@ -168,7 +226,7 @@ sub get_product_list {
 
 This method returns detailed information about product by id.
 
-Input: nothing
+Input: product id
 
 Result: SilverGoldBull::API::Response object
 
@@ -198,7 +256,7 @@ sub get_order_list {
 
 This method returns detailed information about order by id.
 
-Input: nothing
+Input: order id;
 
 Result: SilverGoldBull::API::Response object
 
@@ -217,7 +275,7 @@ sub get_order {
 
 This method creates a new order.
 
-Input: nothing
+Input: SilverGoldBull::API::Order object
 
 Result: SilverGoldBull::API::Response object
 
@@ -236,7 +294,7 @@ sub create_order {
 
 This method creates a quote.
 
-Input: nothing
+Input: SilverGoldBull::API::Quote object
 
 Result: SilverGoldBull::API::Response object
 
@@ -301,41 +359,7 @@ L<http://search.cpan.org/dist/SilverGoldBull-API/>
 
 Copyright 2016 Denis Boyun.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of the the Artistic License (2.0). You may obtain a
-copy of the full license at:
-
-L<http://www.perlfoundation.org/artistic_license_2_0>
-
-Any use, modification, and distribution of the Standard or Modified
-Versions is governed by this Artistic License. By using, modifying or
-distributing the Package, you accept this license. Do not use, modify,
-or distribute the Package, if you do not accept this license.
-
-If your Modified Version has been derived from a Modified Version made
-by someone other than you, you are nevertheless required to ensure that
-your Modified Version complies with the requirements of this license.
-
-This license does not grant you the right to use any trademark, service
-mark, tradename, or logo of the Copyright Holder.
-
-This license includes the non-exclusive, worldwide, free-of-charge
-patent license to make, have made, use, offer to sell, sell, import and
-otherwise transfer the Package with respect to any patent claims
-licensable by the Copyright Holder that are necessarily infringed by the
-Package. If you institute patent litigation (including a cross-claim or
-counterclaim) against any party alleging that the Package constitutes
-direct or contributory patent infringement, then this Artistic License
-to you shall terminate on the date that such litigation is filed.
-
-Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER
-AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.
-THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY
-YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
-CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
-CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
 
 
 =cut
